@@ -2,31 +2,41 @@
 /// <reference path="preview\vsdoc.js" />
 
 function init() {
-	//	Add your code steps here
-	
-	//Create a new item within the menu 
-menu.append(new MenuItem("Sample Item", 0));
-//Creates another menu item
-menu.append(new MenuItem("Sample Item 2", 1)); 
-//You can also cache a local variable for 
-//future calls to a given menu object gj
-var submenu = new MenuItem("Submenu 2",3);
-submenu.append(new MenuItem("Item 1",4));
-submenu.append(new MenuItem("Item 2",5)); 
-menu.append(submenu);
-//Example event handler p
-submenu.onSelect = function(id){
-alert("Menu id " + id + " selected!")
-};
 
-//var so = device.getServiceObject("Service.Sensor", "ISensor");
+	menu.append(new MenuItem("Sample Item", 0));
+	menu.append(new MenuItem("Sample Item 2", 1));
 
 
-}
+}
 
 function toggleMenu() {
-	var res1 = menu.hideSoftkeys();
-	alert(res1);
-	var res2 = menu.showSoftkeys();
-	alert(res2);
+	var MenuIsShow = $("#hdnMenuIsShow").val();
+	if (MenuIsShow == "true") {
+		menu.hideSoftkeys();
+		$("#hdnMenuIsShow").val("false")
+	}
+	else {
+		menu.showSoftkeys();
+		$("#hdnMenuIsShow").val("true")
+	}
 }
+
+function getSensorData() {
+	var so = device.getServiceObject("Service.Sensor", "ISensor");
+
+	var inParams = { SearchCriterion: "All" };
+	var result = so.ISensor.FindSensorChannel(inParams);
+	alert(result.ReturnValue[0].ContextType);
+	alert(result.ReturnValue[1].ContextType);
+	alert(result.ReturnValue[2].ContextType);
+	alert(result.ReturnValue[3].ContextType);
+
+	if (result.ErrorCode != 0) {
+		alert(result.ErrorMessage);
+	}
+
+}
+//	alert(res1);
+//	var res2 = menu.showSoftkeys();
+//	alert(res2);
+

@@ -406,6 +406,9 @@
       <DependentUpon>index.html</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <IncludeInWgz Include="jquery-1.4.2.min.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
