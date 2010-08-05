@@ -1,0 +1,439 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{80DC22A1-A219-4FDC-A498-A745CCDCDA16}</ProjectGuid>
+    <ProjectTypeGuids>{C5296E6E-C1E7-4006-A605-C677B30FADE7};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Basic_Widget1</RootNamespace>
+    <AssemblyName>Basic Widget1</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>$(MSBuildExtensionsPath)\Nokia</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvailableItemName Include="IncludeInWgz">
+      <Visible>false</Visible>
+    </AvailableItemName>
+  </ItemGroup>
+  <ItemGroup>
+    <IncludeInWgz Include="basic.css" />
+    <IncludeInWgz Include="basic.js" />
+    <IncludeInWgz Include="Icon.png" />
+    <IncludeInWgz Include="index.html" />
+    <IncludeInWgz Include="Info.plist" />
+    <None Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\nopreview.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\vsdoc.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\wrtversion.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\nokia.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\resolution.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\xml2json.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\console.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\device.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\loader.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\menu.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\menuItem.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\systeminfo.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\widget.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\sapi\AppManager.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\sapi\Calendar.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\sapi\Contact.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\sapi\Landmarks.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\sapi\Location.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\sapi\Logging.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\sapi\MediaManagement.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\sapi\Messaging.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\sapi\Sensor.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\lib\sapi\SysInfo.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\js\jquery-1.2.6.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\js\jquery-ui-1.6.custom.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\ui.all.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\000000_40x100_textures_05_inset_soft_25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\0078a3_40x100_textures_02_glass_40.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_11x11_icon_arrows_leftright.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_11x11_icon_arrows_updown.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_11x11_icon_close.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_11x11_icon_doc.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_11x11_icon_folder_closed.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_11x11_icon_folder_open.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_11x11_icon_minus.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_11x11_icon_plus.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_7x7_arrow_down.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_7x7_arrow_left.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_7x7_arrow_right.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\222222_7x7_arrow_up.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\555555_40x100_textures_02_glass_20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_11x11_icon_arrows_leftright.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_11x11_icon_arrows_updown.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_11x11_icon_close.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_11x11_icon_doc.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_11x11_icon_folder_closed.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_11x11_icon_folder_open.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_11x11_icon_minus.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_11x11_icon_plus.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_11x11_icon_resize_se.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_7x7_arrow_down.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_7x7_arrow_left.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_7x7_arrow_right.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\cccccc_7x7_arrow_up.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\f58400_40x100_textures_05_inset_soft_30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_11x11_icon_arrows_leftright.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_11x11_icon_arrows_updown.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_11x11_icon_close.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_11x11_icon_doc.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_11x11_icon_folder_closed.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_11x11_icon_folder_open.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_11x11_icon_minus.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_11x11_icon_plus.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_7x7_arrow_down.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_7x7_arrow_left.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_7x7_arrow_right.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\ffffff_7x7_arrow_up.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\script\jquery-ui\css\ui-darkness\images\slider-handle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\active-orientation-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\battery-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\BrowserNotificationBar-Toogle.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\console-clear-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\console-close-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\console-icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\console-open-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\default-Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\errorIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\gradient-bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\Gradient0Background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\hs-iframeMask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\IconArea-hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\infoIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\memory-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\messaging-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\normal-orientation-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\settings-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\statusBar_240x320.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\statusBar_320x240.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\statusBar_360x640.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\statusBar_640x360.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\statusBar_800x352.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\sub-menu-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\th-bg-gradient.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\TransperantImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\warningIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\wrt-help-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\device\MenuItem-keys-Bg2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\device\menuKeys-bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\device\800x352\Landscape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\device\360x640\hs-landscape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\device\360x640\hs-portrait.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\device\360x640\Landscape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\device\360x640\Portrait.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\device\320x240\Landscape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\device\320x240\Portrait.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\images\device\240x320\Landscape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\dtd\plist-1.0.dtd" />
+    <None Include="preview\images\device\240x320\Portrait.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\data\appManager_data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\data\calendar_data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\data\contact_data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\data\landmarks_data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\data\location_data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\data\logging_data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\data\mediaManagement_data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\data\messaging_data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\data\sensor_data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\data\sysInfo_data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preview\css\style.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Basic Widget1.wgz" />
+    <None Include="wrt_preview_frame.html" />
+    <None Include="wrt_preview_main.html">
+      <DependentUpon>index.html</DependentUpon>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
+  <Target Name="PackageWidget">
+    <MakeDir Directories="$(OutputPath)$(TargetName)" />
+    <Copy SourceFiles="@(IncludeInWgz->'%(FullPath)')" DestinationFiles="@(IncludeInWgz->'$(OutputPath)$(TargetName)\%(Identity)')">
+      <Output TaskParameter="CopiedFiles" ItemName="WgzFileItems" />
+    </Copy>
+    <Zip Files="@(WgzFileItems)" WorkingDirectory="$(OutputPath)" ZipFileName="$(ProjectDir)$(TargetName).wgz" />
+    <RemoveDir Directories="$(OutputPath)$(TargetName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3788</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
