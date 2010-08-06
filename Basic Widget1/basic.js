@@ -21,22 +21,52 @@ function toggleMenu() {
 	}
 }
 
+
 function getSensorData() {
-	var so = device.getServiceObject("Service.Sensor", "ISensor");
+	try {
+		var so = device.getServiceObject("Service.Sensor", "ISensor");
 
-	var inParams = { SearchCriterion: "All" };
-	var result = so.ISensor.FindSensorChannel(inParams);
-	alert(result.ReturnValue[0].ContextType);
-	alert(result.ReturnValue[1].ContextType);
-	alert(result.ReturnValue[2].ContextType);
-	alert(result.ReturnValue[3].ContextType);
+		var inParams = { SearchCriterion: "All" };
+		var result = so.ISensor.FindSensorChannel(inParams);
+		var count = result.ReturnValue.length;
 
-	if (result.ErrorCode != 0) {
-		alert(result.ErrorMessage);
+		for (i = 0; i < count; i++) {
+			if (true) {
+
+				var criteria = new Object();
+				criteria.PropertyId = "Description";
+				criteria.ChannelInfoMap = result.ReturnValue[i];
+
+				var resultChannelProperty = so.ISensor.GetChannelProperty(criteria);
+				if (resultChannelProperty.ErrorCode != 0) {
+					alert("ERROR: " + resultChannelProperty.ErrorMessage);
+				}
+				else {
+
+					var criteriaChannelData = new Object();
+					criteriaChannelData.ListeningType = "ChannelData";
+					criteriaChannelData.ChannelInfoMap = result.ReturnValue[i];
+
+					var resultR = so.ISensor.RegisterForNotification(criteriaChannelData, callback1);
+
+//					alert("KEY: " + i
+//				+ "\r\nChannelId: " + result.ReturnValue[i].ChannelId
+//				+ "\r\nContextType: " + result.ReturnValue[i].ContextType
+//				+ "\r\nQuantity: " + result.ReturnValue[i].Quantity
+//				+ "\r\nChannelType: " + result.ReturnValue[i].ChannelType
+
+//				+ " \r\n\r\nPropertyId: " + resultChannelProperty.ReturnValue.PropertyId
+//			+ ";\r\n PropertyDataType: " + resultChannelProperty.ReturnValue.PropertyDataType
+//			 + ";\r\n ItemIndex: " + resultChannelProperty.ReturnValue.ItemIndex
+//			 + ";\r\n PropertyValue: " + resultChannelProperty.ReturnValue.PropertyValue);
+				}
+			}
+		}
+	} catch (e) {
+		alert("showObject: " + e);
 	}
-
 }
-//	alert(res1);
-//	var res2 = menu.showSoftkeys();
-//	alert(res2);
 
+function callback1(transId, eventCode, result) {
+	alert("callback1: transId: " + transId + "  eventCode: " + eventCode + " result.ErrorCode: " + result.ErrorCode + " result: " + result.ReturnValue);
+}
