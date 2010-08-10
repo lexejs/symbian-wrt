@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Nokia//DTD PLIST 1.0//EN" "http://www.nokia.com/NOKIA_COM_1/DTDs/plist-1.0.dtd"[]>
+<plist version="1.0">
+  <dict>
+    <key>DisplayName</key>
+    <string>SensorsWidget</string>
+    <key>Identifier</key>
+    <string>com.nokia.forum.widget.sensors</string>
+    <key>Version</key>
+    <string>1.0</string>
+    <key>AllowNetworkAccess</key>
+    <true />
+    <key>MainHTML</key>
+    <string>sensors.html</string>
+    <key>MiniViewEnabled</key>
+    <false />
+  </dict>
+</plist>
