@@ -5,23 +5,63 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link href="basic.css" rel="stylesheet" type="text/css" />
 
-	<script type="text/javascript" src="basic.js"></script>
+	<script src="platformservices.js" type="text/javascript"></script>
 
-	<script src="jquery-1.4.2.min.js" type="text/javascript"></script>
+	<script language="javascript">
+ 
+        var so = null;
+        var channel = "Orientation";
+ 
+        // Callback method called whenever change in Device Orientation is detected.
+        function onOrientationChange( transId, errCode, orientation ){
+ 
+          if( errCode == 0 ){
+            alert("Device Orientation : " + orientation.deviceOrientation);
+          }
+        };
+ 
+        // On exit lets stop sensor.
+        window.widget.onexit = function() { 
+ 
+            so.stopChannel(channel);               
+        };
+ 
+ 
+        try{
+          // Lets first create geolocation object.
+          so = com.nokia.device.load("", "com.nokia.device.sensors");
+          // Lets get the Orientation channel.
+          var channels = so.getChannels();
+          var len = channels.length;
+          var sensorExists = false;
+          for( var i = 0; i < len; i++){
+            if( channels[i] === channel ){
+              sensorExists = true;
+              break; 
+            }          
+          }
+ 
+          if( !sensorExists ){
+               alert("Device Orientation sensor not available !");
+               return;
+          }
+ 
+          // Lets start getting Device Orientation Changes.  
+          var tid = so.startChannel(onOrientationChange, channel);
+ 
+        }catch(e){
+ 
+          alert("Error : " + e);
+        };
+ 
+ 
+	</script>
 
-	<script src="jquery-1.4.1-vsdoc.js" type="text/javascript"></script>
-
-	<meta name="generator" content="Nokia WRT extension for Visual Studio 2.0" />
 	<script type="text/javascript" src="preview/script/lib/loader.js"></script>
 	</head>
-<body onload="init()">
-	<div id="view1">
-		<input id="hdnMenuIsShow" type="hidden" value="true" />
-		<input id="Button1" type="button" value="toggle soft menu" onclick="getSensorData()" />
-	</div>
-	<div id="view2">
-		VIEW 02
-	</div>
-</body>
+<body>
+	Device Orientation Test Widget
+	<br>
+	using platform services 2.0</body>
 </html>
 

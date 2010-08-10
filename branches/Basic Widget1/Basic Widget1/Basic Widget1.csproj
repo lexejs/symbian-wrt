@@ -414,6 +414,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="apibridge.js" />
+    <IncludeInWgz Include="platformservices.js" />
     <IncludeInWgz Include="telephony.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
