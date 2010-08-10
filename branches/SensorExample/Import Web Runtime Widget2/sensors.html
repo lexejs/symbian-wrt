@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>com.nokia.device.sensors</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <script type="text/javascript" src="script/platformservices.js" charset="utf-8"/>
+        <script type="text/javascript" src="script/templates.js" charset="utf-8">
+        </script>
+        <script type="text/javascript" src="script/platformservices_20_specific.js" charset="utf-8">
+        </script>
+        <script type="text/javascript" src="script/basic.js" charset="utf-8">
+        </script>
+        <link href="styles/reset.css" rel="stylesheet" type= "text/css" />
+        <link href="styles/baseStyles.css" rel="stylesheet" type= "text/css" />
+    </head>
+    <body>
+        <div id="wrap">
+            <div id="content">
+            	
+            <div class="channel">
+                <h3>Rotation channel</h3>
+                <div>
+                    <span class="title">Time stamp </span>
+                    <span id="Rotation_timeStamp">Initial</span>
+                </div>
+                <div>
+                    <span class="title">Rotation </span>
+                    <span id="Rotation_Rotation">X: NA, Y: NA, Z: NA</span>
+                </div>
+            </div>
+			
+            <div class="channel">
+                <h3>Orientation channel</h3>
+                <div>
+                    <span class="title">Time stamp </span>
+                    <span id="Orientation_timeStamp">Initial</span>
+                </div>
+                <div>
+                    <span class="title">Orientation </span>
+                    <span id="Orientation_deviceOrientation">Initial</span>
+                </div>
+            </div>
+			
+            <div class="channel">
+                <h3>Accelerometer Axis channel</h3>
+                <div>
+                    <span class="title">Time stamp </span>
+                    <span id="Accelerometer_timeStamp">Initial</span>
+                </div>
+                <div>
+                    <span class="title">Axis Data </span>
+                    <span id="Accelerometer_AxisData">X: NA, Y: NA, Z: NA</span>
+                </div>
+            </div>
+				
+                <ul class="list-toggle stack">
+                    <li>
+                        <ul class="toggle">
+                            <li>
+                                <label>
+                                    Rotation channel
+                                </label>
+                                <input id="toggle_sensors_rotation" type="checkbox" name="toggle_sensors_rotation" />
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="list-toggle stack">
+                    <li>
+                        <ul class="toggle">
+                            <li>
+                                <label>
+                                    Orientation channel
+                                </label>
+                                <input id="toggle_sensors_orientation" type="checkbox" name="toggle_sensors_orientation" />
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="list-toggle stack">
+                    <li>
+                        <ul class="toggle">
+                            <li>
+                                <label>
+                                    Accelerometer channel
+                                </label>
+                                <input id="toggle_sensors_accelerometer" type="checkbox" name="toggle_sensors_accelerometer" />
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>
