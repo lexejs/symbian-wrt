@@ -7,59 +7,25 @@
 
 	<script src="platformservices.js" type="text/javascript"></script>
 
-	<script language="javascript">
- 
-        var so = null;
-        var channel = "Orientation";
- 
-        // Callback method called whenever change in Device Orientation is detected.
-        function onOrientationChange( transId, errCode, orientation ){
- 
-          if( errCode == 0 ){
-            alert("Device Orientation : " + orientation.deviceOrientation);
-          }
-        };
- 
-        // On exit lets stop sensor.
-        window.widget.onexit = function() { 
- 
-            so.stopChannel(channel);               
-        };
- 
- 
-        try{
-          // Lets first create geolocation object.
-          so = com.nokia.device.load("", "com.nokia.device.sensors");
-          // Lets get the Orientation channel.
-          var channels = so.getChannels();
-          var len = channels.length;
-          var sensorExists = false;
-          for( var i = 0; i < len; i++){
-            if( channels[i] === channel ){
-              sensorExists = true;
-              break; 
-            }          
-          }
- 
-          if( !sensorExists ){
-               alert("Device Orientation sensor not available !");
-               return;
-          }
- 
-          // Lets start getting Device Orientation Changes.  
-          var tid = so.startChannel(onOrientationChange, channel);
- 
-        }catch(e){
- 
-          alert("Error : " + e);
-        };
- 
- 
-	</script>
+	<script src="jquery-1.4.2.min.js" type="text/javascript"></script>
+
+	<script src="basic.js" type="text/javascript"></script>
 
 </head>
 <body>
-	Device Orientation Test Widget
-	<br>
-	using platform services 2.0</body>
+	<div id="cur" name="cur" style="position: absolute;top:280px;left:140px;">
+		<img src="Icon.png" alt="HELLO!"/>
+	</div>
+	<div>
+		<h3>
+			Accelerometer Axis channel<input id="ButtonOn" type="button" value="on" onclick="startAccelerometerAxisSensorChannel()" /><input
+				id="ButtonOff" type="button" value="off" onclick="MystopChannel('AccelerometerAxis')" /></h3>
+		<div>
+			<span>Time stamp </span><span id="Accelerometer_timeStamp">Initial</span>
+		</div>
+		<div>
+			<span>Axis Data </span><span id="Accelerometer_AxisData">X: NA, Y: NA, Z: NA</span>
+		</div>
+	</div>
+</body>
 </html>

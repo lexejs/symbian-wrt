@@ -410,12 +410,7 @@
     <IncludeInWgz Include="jquery-1.4.2.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <IncludeInWgz Include="jquery-1.4.1-vsdoc.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="apibridge.js" />
     <IncludeInWgz Include="platformservices.js" />
-    <IncludeInWgz Include="telephony.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
