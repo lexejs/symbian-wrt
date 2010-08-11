@@ -3,16 +3,19 @@ var sensor = null;
 var transactionIDAccelerometer = "";
 addEvent("onload", init);
 
-var xAxisMin ;
-var xAxisMax ;
-var xAxis ;
-var yAxis ;
-var xAxisInit ;
-var yAxisInit ;
-var yAxisMin ;
-var yAxisMax ;
-var aprox ;
-var isAction = 0; // 1 left, 2 right, 3 up, 4 down
+var xAxisMin;
+var xAxisMax;
+var xAxis;
+var yAxis;
+var xAxisInit;
+var yAxisInit;
+var yAxisMin;
+var yAxisMax;
+var aprox;
+var step;
+var isActionX = 0; // 1 left, 2 right, 3 up, 4 down
+var isActionY = 0; // 1 left, 2 right, 3 up, 4 down
+var stopToAnimation = 1;
 
 
 function initVars() {
@@ -25,7 +28,9 @@ function initVars() {
 	yAxisMin = -5;
 	yAxisMax = 5;
 	aprox = 20;
-	isAction = 0;
+	step = 10;
+	isActionX = 0;
+	isActionY = 0;
 }
 
 var Accelerometer_timeStamp = null;
@@ -49,66 +54,86 @@ function init() {
 	// change the screen orientation
 		widget.setDisplayPortrait();
 	startAccelerometerAxisSensorChannel();
+	//	$("#cur").attr("style", "position: absolute;top:0px;left:0px;");
+	//	$("#cur").animate({ top: 280}, 1000);
 }
 
 function move(sensordata) {
+	if (yAxisInit == -100) { yAxisInit = sensordata.axisY; }
+	if (xAxisInit == -100) { xAxisInit = sensordata.axisX; }
 
-	if (sensordata.axisY > yAxisMax) {
-		yAxisMax = sensordata.axisY;
-	}
-	if (sensordata.axisY < yAxisMin) {
-		yAxisMin = sensordata.axisY;
-	}
-	if (yAxisInit == -100) {
-	yAxisInit = sensordata.axisY; }
-
-	if (yAxisMax - yAxisMin > aprox/2 ) {
-		if (yAxisMax == sensordata.axisY) {
-			if (isAction == 3) {
-				isAction = 0;
-			} else if (isAction != 4) {
-				yAxis = yAxis + aprox/2;
-				yAxisMax = yAxis + aprox/2;
-				yAxisMin = yAxisMax - aprox;
-				isAction = 4;
-			}
-		} else {
-			if (isAction == 4) {
-				isAction = 0;
-			} else if (isAction != 3) {
-				yAxis = yAxisMin - aprox/2;
-				yAxisMax = yAxis + aprox/2;
-				yAxisMin = yAxisMax - aprox;
-				isAction = 3;
-			}
+	if (Math.abs(sensordata.axisY - yAxisInit) > aprox) {
+		if (sensordata.axisY - yAxisInit > 0 && isActionY != 3) {
+			yAxis = yAxis + step;
+			isActionY = 3;
+			yAxisInit = yAxisInit - step;
+		}
+		else if (sensordata.axisY - yAxisInit < 0 && isActionY != 4) {
+			yAxis = yAxis - step;
+			isActionY = 4;
+			yAxisInit = yAxisInit + step;
 		}
 	}
-	/*
-	if (sensordata.axisX > xAxisMax) {
-		xAxisMax = sensordata.axisX;
-	}
-	if (sensordata.axisX < xAxisMin) {
-		xAxisMin = sensordata.axisX;
-	}
-
-	if (xAxisMax - xAxisMin > aprox * 2) {
-		if (xAxisMax == sensordata.axisX) {
-			xAxis = xAxis + aprox;
-			xAxisMax = xAxis + aprox;
-			xAxisMin = xAxisMax - aprox * 2;
-			isAction = 2;
-		} else {
-			xAxis = xAxisMin - aprox;
-			xAxisMax = xAxis + aprox;
-			xAxisMin = xAxisMax - aprox * 2;
-			isAction = 1;
+	else {
+		if (isActionY == 3) {
+			yAxisInit = yAxisInit + step;
 		}
+		if (isActionY == 4) {
+			yAxisInit = yAxisInit - step;
+		}
+		isActionY = 0;
+	}
+
+	if (Math.abs(sensordata.axisX - xAxisInit) > aprox) {
+		if (sensordata.axisX - xAxisInit > 0 && isActionX != 1) {
+			xAxis = xAxis + step;
+			isActionX = 1;
+			xAxisInit = xAxisInit - step;
+		}
+		else if (sensordata.axisX - xAxisInit < 0 && isActionX != 2) {
+			xAxis = xAxis - step;
+			isActionX = 2;
+			xAxisInit = xAxisInit + step;
+		}
+	}
+	else {
+		if (isActionX == 1) {
+			xAxisInit = xAxisInit + step;
+		}
+		if (isActionX == 2) {
+			xAxisInit = xAxisInit - step;
+		}
+		isActionX = 0;
 
 	}
-*/
-	cur.setAttribute("style",
-	"position: absolute;top:" + (280 + yAxis * 4) + "px;left:" + (140 - xAxis * 2) + "px;")
+
+	xAxisMax = Math.min(360 - 80, Math.max(0, 140 - xAxis * 2));
+	yAxisMax = Math.min(600 - 80, Math.max(0, 280 + yAxis * 4));
+
+	if (stopToAnimation == 1) {
+		if ((isActionY == 3 || isActionY == 4)) {
+			stopToAnimation = 0;
+			$("#cur").animate({ top: yAxisMax }, 250, function() {
+				stopToAnimation = 1; // Animation complete.
+			});
+		} else if (isActionX == 1 || isActionX == 2) {
+			stopToAnimation = 0;
+			$("#cur").animate({ left: xAxisMax }, 250, function() {
+				stopToAnimation = 1; // Animation complete.
+			});
+		}
+	}
+
 }
+
+function pausecomp(millis) {
+	var date = new Date();
+	var curDate = null;
+
+	do { curDate = new Date(); }
+	while (curDate - date < millis);
+}
+
 /*
 Displays Accelerometer channel sensor data in widget ui.
 sensordata object is passed to display function in
@@ -124,9 +149,9 @@ service platform asyncronous callback handlers. sensordata schema:
 function displayAccelerometerAxisChannel(sensordata) {
 	try {
 		if (sensordata.timeStamp.length && sensordata.axisX.toString.length
-		&& sensordata.axisY.toString.length && sensordata.axisZ.toString.length) {
-			Accelerometer_timeStamp.innerHTML = sensordata.timeStamp;
-			Accelerometer_AxisData.innerHTML = "X: " + sensordata.axisX + ", Y: " + sensordata.axisY + ", Z: " + sensordata.axisZ;
+		&& sensordata.axisY.toString.length) {
+			//			Accelerometer_timeStamp.innerHTML = sensordata.timeStamp;
+			//			Accelerometer_AxisData.innerHTML = "X: " + sensordata.axisX + ", Y: " + sensordata.axisY + ", Z: " + sensordata.axisZ;
 			move(sensordata);
 
 		}
@@ -152,34 +177,12 @@ function startAccelerometerAxisSensorChannel() {
 	try {
 		if (transactionIDAccelerometer == "") {
 
-			transactionIDAccelerometer = sensor.startChannel(onAccelerometerChannelNotification, "AccelerometerAxis");
+			transactionIDAccelerometer = sensor.startChannel(displayAccelerometerAxisChannel, "AccelerometerAxis");
 		}
 	}
 	catch (e) {
 		var error = e.toString();
 		alert(error);
-	}
-}
-
-/*
-Callback handler for Accelerometer channel change notifications
-Assigned in startAccelerometerSensorChannel()function
-Serves sensor data object to corresponding display function (in basic.js)
-sensordata schema:
-{
-"timeStamp": Date,
-"xAxisData": Number,
-"yAxisData": Number,
-"zAxisData": Number
-}
-*/
-function onAccelerometerChannelNotification(data) {
-	try {
-		displayAccelerometerAxisChannel(data)
-	}
-	catch (e) {
-		var error = e.toString();
-		alert("AccelerometerAxis Notification: " + error);
 	}
 }
 
@@ -217,4 +220,3 @@ function addEvent(_event, _function) {
 		}
 	}
 }
-
