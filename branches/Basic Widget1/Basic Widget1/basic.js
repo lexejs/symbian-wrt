@@ -1,4 +1,6 @@
 /// <reference path="preview\vsdoc.js" />
+/// <reference path="jquery-1.4.1-vsdoc.js" />
+
 var sensor = null;
 var transactionIDAccelerometer = "";
 addEvent("onload", init);
@@ -62,7 +64,8 @@ function move(sensordata) {
 
 	if (Math.abs(sensordata.axisY - yAxisInit) > aprox) {
 		if (sensordata.axisY - yAxisInit > 0 && isActionY != 3) {
-			yAxis = yAxis + step;
+			if (yAxis <=360 -step)
+                        yAxis = yAxis + step;
 			isActionY = 3;
 			yAxisInit = yAxisInit - aprox;
 		}
