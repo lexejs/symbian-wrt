@@ -43,7 +43,6 @@ function init() {
 
 	cur = document.getElementById("cur");
 
-
 	try {
 		initSensors();
 	}
@@ -55,7 +54,6 @@ function init() {
 		widget.setDisplayPortrait();
 
 	startAccelerometerAxisSensorChannel();
-
 }
 
 function move(sensordata) {
@@ -64,15 +62,18 @@ function move(sensordata) {
 
 	if (Math.abs(sensordata.axisY - yAxisInit) > aprox) {
 		if (sensordata.axisY - yAxisInit > 0 && isActionY != 3) {
-			if (yAxis <=360 -step)
-                        yAxis = yAxis + step;
-			isActionY = 3;
-			yAxisInit = yAxisInit - aprox;
+			if (yAxis <= 640 - step) {
+				yAxis = yAxis + step;
+				isActionY = 3;
+				yAxisInit = yAxisInit - aprox;
+			}
 		}
 		else if (sensordata.axisY - yAxisInit < 0 && isActionY != 4) {
-			yAxis = yAxis - step;
-			isActionY = 4;
-			yAxisInit = yAxisInit + aprox;
+			if (yAxis >= step) {
+				yAxis = yAxis - step;
+				isActionY = 4;
+				yAxisInit = yAxisInit + aprox;
+			}
 		}
 	}
 	else {
@@ -87,14 +88,18 @@ function move(sensordata) {
 
 	if (Math.abs(sensordata.axisX - xAxisInit) > aprox) {
 		if (sensordata.axisX - xAxisInit > 0 && isActionX != 1) {
-			xAxis = xAxis + step;
-			isActionX = 1;
-			xAxisInit = xAxisInit - aprox;
+			if (xAxis <= 360 - step) {
+				xAxis = xAxis + step;
+				isActionX = 1;
+				xAxisInit = xAxisInit - aprox;
+			}
 		}
 		else if (sensordata.axisX - xAxisInit < 0 && isActionX != 2) {
-			xAxis = xAxis - step;
-			isActionX = 2;
-			xAxisInit = xAxisInit + aprox;
+			if (xAxis >= step) {
+				xAxis = xAxis - step;
+				isActionX = 2;
+				xAxisInit = xAxisInit + aprox;
+			}
 		}
 	}
 	else {
