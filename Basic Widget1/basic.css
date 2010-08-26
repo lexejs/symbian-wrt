@@ -1,3 +1,31 @@
 /*
  * Add your Stylesheet contents here
  */
+
+.bodyMain
+{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+.tableMain
+{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	
+	border-width: thin;
+	border-color: Red;
+	border-style: inset;
+}
+.trMain
+{
+	height: 80px;
+}
+
+.tdMain
+{
+	width: 78px;
+	border-width: thin;
+	border-color: Red;
+	border-style: inset;
+}
+

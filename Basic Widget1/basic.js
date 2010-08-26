@@ -18,8 +18,6 @@ var step;
 var isActionX = 0; // 1 left, 2 right, 3 up, 4 down
 var isActionY = 0; // 1 left, 2 right, 3 up, 4 down
 var stopToAnimation = 1;
-
-
 function initVars() {
 	xAxisMin = -5;
 	xAxisMax = 5;
@@ -34,7 +32,6 @@ function initVars() {
 	isActionX = 0;
 	isActionY = 0;
 }
-
 var cur = null;
 
 function init() {
@@ -52,7 +49,15 @@ function init() {
 	}
 	if (widget.isrotationsupported)// change the screen orientation
 		widget.setDisplayPortrait();
-
+		
+	$("#mainTable").append($('<tr>').addClass("trMain"));
+	$("#mainTable tr:last").append($('<td>').addClass("tdMain"));
+	$("#mainTable tr:last").append($('<td>').addClass("tdMain"));
+	$("#mainTable tr:last").append($('<td>').addClass("tdMain"));
+	$("#mainTable").append($('<tr>').addClass("trMain"));
+	$("#mainTable tr:last").append($('<td>').addClass("tdMain"));
+	
+	$("tr").css("height", 80);
 	startAccelerometerAxisSensorChannel();
 }
 
@@ -88,14 +93,14 @@ function move(sensordata) {
 
 	if (Math.abs(sensordata.axisX - xAxisInit) > aprox) {
 		if (sensordata.axisX - xAxisInit > 0 && isActionX != 1) {
-			if (xAxis <= 360 - step) {
+			if (xAxis <= -step) {
 				xAxis = xAxis + step;
 				isActionX = 1;
 				xAxisInit = xAxisInit - aprox;
 			}
 		}
 		else if (sensordata.axisX - xAxisInit < 0 && isActionX != 2) {
-			if (xAxis >= step) {
+			if (xAxis >= -360 + step) {
 				xAxis = xAxis - step;
 				isActionX = 2;
 				xAxisInit = xAxisInit + aprox;
