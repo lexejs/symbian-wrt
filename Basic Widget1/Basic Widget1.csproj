@@ -39,7 +39,6 @@
   <ItemGroup>
     <IncludeInWgz Include="basic.css" />
     <IncludeInWgz Include="basic.js" />
-    <IncludeInWgz Include="Icon.png" />
     <IncludeInWgz Include="index.html" />
     <IncludeInWgz Include="Info.plist" />
     <None Include="web.config" />
@@ -410,6 +409,7 @@
     <IncludeInWgz Include="jquery-1.4.2.min.js" />
   </ItemGroup>
   <ItemGroup>
+    <IncludeInWgz Include="Icon40.png" />
     <IncludeInWgz Include="platformservices.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

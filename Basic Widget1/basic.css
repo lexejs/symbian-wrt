@@ -11,21 +11,44 @@
 {
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
-	
-	border-width: thin;
-	border-color: Red;
-	border-style: inset;
-}
-.trMain
-{
-	height: 80px;
 }
 
-.tdMain
+.divMain
 {
-	width: 78px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.trMain
+{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	height: 40px;
+}
+
+.tdMain, .tdMain2, .tdMain3, .tdMain4
+{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	width: 39px;
 	border-width: thin;
 	border-color: Red;
 	border-style: inset;
+}
+
+.tdMain2
+{
+	background-color: Blue;
+}
+
+.tdMain3
+{
+	background-color: Red;
+}
+
+.tdMain4
+{
+	background-color: Gray;
 }
 
