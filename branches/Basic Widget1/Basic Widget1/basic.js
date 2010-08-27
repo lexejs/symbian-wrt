@@ -1,5 +1,7 @@
 /// <reference path="preview\vsdoc.js" />
 /// <reference path="jquery-1.4.1-vsdoc.js" />
+/// <reference path="jQueryRotate.js" />
+
 
 var sensor = null;
 var transactionIDAccelerometer = "";
@@ -18,6 +20,17 @@ var step;
 var isActionX = 0; // 1 left, 2 right, 3 up, 4 down
 var isActionY = 0; // 1 left, 2 right, 3 up, 4 down
 var stopToAnimation = 1;
+var currX = 0;
+var currY = 0;
+var aminationSpeed = 200;
+
+var matrix = [[4, 0, 4],
+				 [0, 1, 0],
+				 [0, 4, 0],
+				 [0, 0, 0],
+				 [3, 3, 0],
+				 [2, 0, 2]];
+
 function initVars() {
 	xAxisMin = -5;
 	xAxisMax = 5;
@@ -28,17 +41,17 @@ function initVars() {
 	yAxisMin = -5;
 	yAxisMax = 5;
 	aprox = 20;
-	step = 80;
+	step = 40;
 	isActionX = 0;
 	isActionY = 0;
+	currX = 0;
+	currY = 0;
 }
-var cur = null;
+
 
 function init() {
 	initVars();
 	initMenu();
-
-	cur = document.getElementById("cur");
 
 	try {
 		initSensors();
@@ -47,96 +60,131 @@ function init() {
 		var error = e.toString();
 		alert(error);
 	}
-	if (widget.isrotationsupported)// change the screen orientation
+	if (widget.isrotationsupported) {// change the screen orientation
 		widget.setDisplayPortrait();
-		
-	$("#mainTable").append($('<tr>').addClass("trMain"));
-	$("#mainTable tr:last").append($('<td>').addClass("tdMain"));
-	$("#mainTable tr:last").append($('<td>').addClass("tdMain"));
-	$("#mainTable tr:last").append($('<td>').addClass("tdMain"));
-	$("#mainTable").append($('<tr>').addClass("trMain"));
-	$("#mainTable tr:last").append($('<td>').addClass("tdMain"));
-	
-	$("tr").css("height", 80);
+	}
+
+	renderTable();
+	renderObjects();
+	//$("#mainDiv").append($('<div>').addClass("divMain").append($('<img>').attr({ src: "pack40.png" })).animate({ top: 200, left: 100 }, 300, animationComplete));
+
 	startAccelerometerAxisSensorChannel();
 }
 
-function move(sensordata) {
-	if (yAxisInit == -100) { yAxisInit = sensordata.axisY; }
-	if (xAxisInit == -100) { xAxisInit = sensordata.axisX; }
+function stepUp() {
+	//yAxis = yAxis - step;
+	currY--;
+	animationStart();
+}
 
-	if (Math.abs(sensordata.axisY - yAxisInit) > aprox) {
-		if (sensordata.axisY - yAxisInit > 0 && isActionY != 3) {
-			if (yAxis <= 640 - step) {
-				yAxis = yAxis + step;
-				isActionY = 3;
-				yAxisInit = yAxisInit - aprox;
-			}
-		}
-		else if (sensordata.axisY - yAxisInit < 0 && isActionY != 4) {
-			if (yAxis >= step) {
-				yAxis = yAxis - step;
-				isActionY = 4;
-				yAxisInit = yAxisInit + aprox;
+function stepDown() {
+	//yAxis = yAxis + step;
+	currY++;
+	animationStart();
+}
+
+function stepL() {
+	//xAxis = xAxis + step;
+	currX--;
+	animationStart();
+}
+
+function stepR() {
+	//xAxis = xAxis - step;
+	currX++;
+	animationStart();
+}
+
+
+function renderObjects() {
+	$("#mainDiv").html('');
+	for (var i = 0; i < matrix.length; i++) {
+		for (var j = 0; j < matrix[0].length; j++) {
+//			if (matrix[i][j] == 1) {
+//				currX = j;
+//				currY = i;
+//				stopToAnimation = 0;
+//				$("#cur").animate({ top: i * step, left: j * step }, aminationSpeed, animationComplete);
+			//			} else 
+if (matrix[i][j] == 3) {
+				$("#mainDiv")
+				.append($('<div>').addClass("divMain")
+					.append($('<img>').attr({ src: "pack40.png" }))
+					.animate({ top: i * step, left: j * step }, 0, animationComplete));
+
 			}
 		}
 	}
-	else {
-		if (isActionY == 3) {
-			yAxisInit = yAxisInit + aprox;
-		}
-		if (isActionY == 4) {
-			yAxisInit = yAxisInit - aprox;
-		}
-		isActionY = 0;
-	}
+}
 
-	if (Math.abs(sensordata.axisX - xAxisInit) > aprox) {
-		if (sensordata.axisX - xAxisInit > 0 && isActionX != 1) {
-			if (xAxis <= -step) {
-				xAxis = xAxis + step;
-				isActionX = 1;
-				xAxisInit = xAxisInit - aprox;
+function renderTable() {
+	$("#mainTable").html('');
+	for (var i = 0; i < matrix.length; i++) {
+		$("#mainTable").append($('<tr>').addClass("trMain"));
+		for (var j = 0; j < matrix[0].length; j++) {
+			if (matrix[i][j] == 1) {
+				currX = j;
+				currY = i;
+				//alert("animationStart to " +i + " "+ j);
+				stopToAnimation = 0;
+				$("#cur").animate({ top: i * step, left: j * step }, aminationSpeed, animationComplete);
+			} else if (matrix[i][j] == 2) {
+				$("#mainTable tr:last").append($('<td>').addClass("tdMain2"));
+				//			} else if (matrix[i][j] == 3) {
+				//				$("#mainTable tr:last").append($('<td>').addClass("tdMain3"));
+			} else if (matrix[i][j] == 4) {
+				$("#mainTable tr:last").append($('<td>').addClass("tdMain4"));
+			} else {
+				$("#mainTable tr:last").append($('<td>').addClass("tdMain"));
 			}
 		}
-		else if (sensordata.axisX - xAxisInit < 0 && isActionX != 2) {
-			if (xAxis >= -360 + step) {
-				xAxis = xAxis - step;
-				isActionX = 2;
-				xAxisInit = xAxisInit + aprox;
-			}
-		}
-	}
-	else {
-		if (isActionX == 1) {
-			xAxisInit = xAxisInit + aprox;
-		}
-		if (isActionX == 2) {
-			xAxisInit = xAxisInit - aprox;
-		}
-		isActionX = 0;
-
 	}
 
-	xAxisMax = Math.min(360 - step, Math.max(0, -xAxis));
-	yAxisMax = Math.min(600 - step, Math.max(0, yAxis));
+	//	$("tr").css("height", 40);
+	//	$("td").css("width", 38);
+	//alert("renderComplete");
+}
 
+function canStepL() {
+	//return xAxis >= -360 + step;
+	return currX > 0 && matrix[currY][currX - 1] != 4;
+}
+
+function canStepR() {
+	//return xAxis <= -step;
+	return currX < matrix[0].length - 1 && matrix[currY][currX + 1] != 4;
+}
+
+function canStepUp() {
+	//return yAxis >= step;
+	return currY > 0 && matrix[currY - 1][currX] != 4;
+}
+
+function canStepDown() {
+	//return yAxis <= 640 - step;
+	return currY < matrix.length - 1 && matrix[currY + 1][currX] != 4;
+
+}
+
+function animationStart() {
+	//	xAxisMax = Math.min(360 - step, Math.max(0, -xAxis));
+	//	yAxisMax = Math.min(600 - step, Math.max(0, yAxis));
+
+	//	if (stopToAnimation == 1) {
+	//		if (isActionY == 3 || isActionY == 4) {
+	//			stopToAnimation = 0;
+	//			$("#cur").animate({ top: yAxisMax }, aminationSpeed, animationComplete);
+	//		} else if (isActionX == 1 || isActionX == 2) {
+	//			stopToAnimation = 0;
+	//			alert("gotoX: " + xAxisMax);
+	//			$("#cur").animate({ left: xAxisMax }, aminationSpeed, animationComplete);
+	//		}
+	//	}
 	if (stopToAnimation == 1) {
-		if (isActionY == 3) { // UP
-			stopToAnimation = 0;
-			$("#cur").animate({ top: yAxisMax }, 250, animationComplete);
-		} else if (isActionY == 4) { // DOWN
-			stopToAnimation = 0;
-			$("#cur").animate({ top: yAxisMax }, 250, animationComplete);
-		} else if (isActionX == 1) {
-			stopToAnimation = 0;
-			$("#cur").animate({ left: xAxisMax }, 250, animationComplete);
-		} else if (isActionX == 2) {
-			stopToAnimation = 0;
-			$("#cur").animate({ left: xAxisMax }, 250, animationComplete);
-		}
+		stopToAnimation = 0;
+		$("#cur").animate({ top: currY * step, left: currX * step }, aminationSpeed, animationComplete);
 	}
-
+	renderObjects();
 }
 
 function animationComplete() {
@@ -162,6 +210,69 @@ function onMenu(id) {
 		MystopChannel("AccelerometerAxis");
 	}
 };
+
+
+function move(sensordata) {
+	if (yAxisInit == -100) { yAxisInit = sensordata.axisY; }
+	if (xAxisInit == -100) { xAxisInit = sensordata.axisX; }
+
+	if (Math.abs(sensordata.axisY - yAxisInit) > aprox) {
+		if (sensordata.axisY - yAxisInit > 0 && isActionY != 3) {
+			if (canStepDown()) {
+				isActionY = 3;
+				yAxisInit = yAxisInit - aprox;
+				stepDown();
+			}
+		}
+		else if (sensordata.axisY - yAxisInit < 0 && isActionY != 4) {
+			if (canStepUp()) {
+				isActionY = 4;
+				yAxisInit = yAxisInit + aprox;
+				stepUp();
+
+			}
+		}
+	}
+	else {
+		if (isActionY == 3) {
+			yAxisInit = yAxisInit + aprox;
+		}
+		if (isActionY == 4) {
+			yAxisInit = yAxisInit - aprox;
+		}
+		isActionY = 0;
+	}
+
+	if (Math.abs(sensordata.axisX - xAxisInit) > aprox) {
+		if (sensordata.axisX - xAxisInit > 0 && isActionX != 1) {
+			if (canStepL()) {
+				isActionX = 1;
+				xAxisInit = xAxisInit - aprox;
+				stepL();
+
+			}
+		}
+		else if (sensordata.axisX - xAxisInit < 0 && isActionX != 2) {
+			if (canStepR()) {
+				isActionX = 2;
+				xAxisInit = xAxisInit + aprox;
+				stepR();
+			}
+		}
+	}
+	else {
+		if (isActionX == 1) {
+			xAxisInit = xAxisInit + aprox;
+		}
+		if (isActionX == 2) {
+			xAxisInit = xAxisInit - aprox;
+		}
+		isActionX = 0;
+
+	}
+
+}
+
 
 
 /*
