@@ -178,7 +178,7 @@ function canStepDown() {
 function animationStart() {
 	if (stopToAnimation == 1) {
 		stopToAnimation = 0;
-		$("#cur").animate({ top: currY * step, left: currX * step }, aminationSpeed, animationComplete);
+		$("#cur").animate({ top: currY * step+1, left: currX * step+1 }, aminationSpeed, animationComplete);
 	}
 	renderObjects();
 }
