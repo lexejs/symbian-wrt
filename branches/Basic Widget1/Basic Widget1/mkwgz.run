@@ -1,9 +1,9 @@
 #!/bin/bash
 
-filename="bw`date +%F_%k%M`.wgz"
+filename="bw`date +%F_%H%M`.wgz"
 
 mkdir Basic\ Widget1
-cp basic.css basic.js Icon40.png index.html Info.plist jquery-1.4.2.min.js pack40.png platformservices.js Basic\ Widget1
+cp basic.css basic.js Icon40.png Icon.png index.html Info.plist jquery-1.4.2.min.js pack40.png platformservices.js Basic\ Widget1
 zip -r $filename Basic\ Widget1
 rm -r Basic\ Widget1
 echo "$filename created"
