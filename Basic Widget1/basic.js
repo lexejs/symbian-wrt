@@ -26,9 +26,9 @@ var aminationSpeed = 200;
 var matrix = [[4, 0, 4],
 				 [0, 1, 0],
 				 [0, 4, 0],
-				 [0, 0, 0],
-				 [3, 3, 0],
-				 [2, 0, 2]];
+				 [0, 3, 0],
+				 [3, 0, 0],
+				 [0.5, 0, 0.5]];
 
 function initVars() {
 	xAxisMin = -5;
@@ -69,36 +69,63 @@ function init() {
 function stepUp() {
 	currY--;
 	animationStart();
+	if (matrix[currY][currX] > 2) {
+		matrix[currY][currX] = matrix[currY][currX] - 3;
+		matrix[currY - 1][currX] = matrix[currY - 1][currX] + 3;
+		renderObjects();
+	}
 }
 
 function stepDown() {
 	currY++;
 	animationStart();
+	if (matrix[currY][currX] > 2) {
+		matrix[currY][currX] = matrix[currY][currX] - 3;
+		matrix[currY + 1][currX] = matrix[currY + 1][currX] + 3;
+		renderObjects();
+	}
 }
 
 function stepL() {
 	currX--;
 	animationStart();
+	if (matrix[currY][currX] > 2) {
+		matrix[currY][currX] = matrix[currY][currX] - 3;
+		matrix[currY][currX - 1] = matrix[currY][currX - 1] + 3;
+		renderObjects();
+	}
 }
 
 function stepR() {
 	currX++;
 	animationStart();
+	if (matrix[currY][currX] > 2) {
+		matrix[currY][currX] = matrix[currY][currX] - 3;
+		matrix[currY][currX + 1] = matrix[currY][currX + 1] + 3;
+		renderObjects();
+	}
 }
 
 
 function renderObjects() {
 	$("#mainDiv").html('');
+	var win = true;
 	for (var i = 0; i < matrix.length; i++) {
 		for (var j = 0; j < matrix[0].length; j++) {
-			if (matrix[i][j] == 3) {
+			if (matrix[i][j] == 3 || matrix[i][j] == 3.5) {
 				$("#mainDiv")
 				.append($('<div>').addClass("divMain")
 					.append($('<img>').attr({ src: "pack40.png" }))
 					.animate({ top: i * step, left: j * step }, 0, animationComplete));
-
 			}
+			else if (matrix[i][j] == 0.5)
+			{ win = false; }
+
 		}
+	}
+	if (win) {
+		onMenu(4);
+		alert("YOU WIN!!!");
 	}
 }
 
@@ -112,10 +139,10 @@ function renderTable() {
 				currY = i;
 				stopToAnimation = 0;
 				$("#cur").animate({ top: i * step, left: j * step }, aminationSpeed, animationComplete);
-			} else if (matrix[i][j] == 2) {
+			} else if (matrix[i][j] == 0.5) {
 				$("#mainTable tr:last").append($('<td>').addClass("tdMain2"));
-							} else if (matrix[i][j] == 1) {
-								$("#mainTable tr:last").append($('<td>').addClass("tdMain3"));
+			} else if (matrix[i][j] == 1) {
+				$("#mainTable tr:last").append($('<td>').addClass("tdMain3"));
 			} else if (matrix[i][j] == 4) {
 				$("#mainTable tr:last").append($('<td>').addClass("tdMain4"));
 			} else {
@@ -129,23 +156,27 @@ function renderTable() {
 }
 
 function canStepL() {
-	return currX > 0 && matrix[currY][currX - 1] != 4;
+	return currX > 0 && matrix[currY][currX - 1] < 3
+	|| (currX > 1 && matrix[currY][currX - 1] == 3 && matrix[currY][currX - 2] < 3);
 }
 
 function canStepR() {
-	return currX < matrix[0].length - 1 && matrix[currY][currX + 1] != 4;
+	return currX < matrix[0].length - 1 && matrix[currY][currX + 1] < 3
+	|| (currX < matrix[0].length - 2 && matrix[currY][currX + 1] == 3 && matrix[currY][currX + 2] < 3);
 }
 
 function canStepUp() {
-	return currY > 0 && matrix[currY - 1][currX] != 4;
+	return currY > 0 && matrix[currY - 1][currX] < 3
+	|| (currY > 1 && matrix[currY - 1][currX] == 3 && matrix[currY - 2][currX] < 3);
 }
 
 function canStepDown() {
-	return currY < matrix.length - 1 && matrix[currY + 1][currX] != 4;
+	return currY < matrix.length - 1 && matrix[currY + 1][currX] < 3
+	|| (currY < matrix.length - 2 && matrix[currY + 1][currX] == 3 && matrix[currY + 2][currX] < 3);
 }
 
 function animationStart() {
-		if (stopToAnimation == 1) {
+	if (stopToAnimation == 1) {
 		stopToAnimation = 0;
 		$("#cur").animate({ top: currY * step, left: currX * step }, aminationSpeed, animationComplete);
 	}
@@ -237,7 +268,7 @@ function move(sensordata) {
 
 function displayAccelerometerAxisChannel(sensordata) {
 	try {
-		if (sensordata.timeStamp.length && sensordata.axisX.toString.length
+		if (sensordata != null && sensordata.timeStamp.length && sensordata.axisX.toString.length
 		&& sensordata.axisY.toString.length) {
 			move(sensordata);
 		}
