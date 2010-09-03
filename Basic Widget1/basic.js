@@ -6,14 +6,8 @@ var sensor = null;
 var transactionIDAccelerometer = "";
 addEvent("onload", init);
 
-var xAxisMin;
-var xAxisMax;
-var xAxis;
-var yAxis;
 var xAxisInit;
 var yAxisInit;
-var yAxisMin;
-var yAxisMax;
 var aprox;
 var step;
 var isActionX = 0; // 1 left, 2 right, 3 up, 4 down
@@ -23,22 +17,16 @@ var currX = 0;
 var currY = 0;
 var aminationSpeed = 200;
 
-var matrix = [[4, 0, 4],
+var matrix =	 [[4, 0, 4],
 				 [0, 1, 0],
 				 [0, 4, 0],
-				 [0, 3, 0],
-				 [3, 0, 0],
-				 [0.5, 0, 0.5]];
+				 [3, 3, 0],
+				 [.5, 0, 0],
+				 [0, 0, 0.5]];
 
 function initVars() {
-	xAxisMin = -5;
-	xAxisMax = 5;
-	xAxis = 0;
-	yAxis = 0;
-	xAxisInit = 0;
+	xAxisInit = -100;
 	yAxisInit = -100;
-	yAxisMin = -5;
-	yAxisMax = 5;
 	aprox = 20;
 	step = 40;
 	isActionX = 0;
@@ -157,22 +145,22 @@ function renderTable() {
 
 function canStepL() {
 	return currX > 0 && matrix[currY][currX - 1] < 3
-	|| (currX > 1 && matrix[currY][currX - 1] == 3 && matrix[currY][currX - 2] < 3);
+	|| (currX > 1 && matrix[currY][currX - 1] <4 && matrix[currY][currX - 2] < 3);
 }
 
 function canStepR() {
 	return currX < matrix[0].length - 1 && matrix[currY][currX + 1] < 3
-	|| (currX < matrix[0].length - 2 && matrix[currY][currX + 1] == 3 && matrix[currY][currX + 2] < 3);
+	|| (currX < matrix[0].length - 2 && matrix[currY][currX + 1] <4 && matrix[currY][currX + 2] < 3);
 }
 
 function canStepUp() {
 	return currY > 0 && matrix[currY - 1][currX] < 3
-	|| (currY > 1 && matrix[currY - 1][currX] == 3 && matrix[currY - 2][currX] < 3);
+	|| (currY > 1 && matrix[currY - 1][currX] <4 && matrix[currY - 2][currX] < 3);
 }
 
 function canStepDown() {
 	return currY < matrix.length - 1 && matrix[currY + 1][currX] < 3
-	|| (currY < matrix.length - 2 && matrix[currY + 1][currX] == 3 && matrix[currY + 2][currX] < 3);
+	|| (currY < matrix.length - 2 && matrix[currY + 1][currX] <4 && matrix[currY + 2][currX] < 3);
 }
 
 function animationStart() {
