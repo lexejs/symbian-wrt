@@ -116,11 +116,16 @@ function renderObjects() {
 	}
 	if (win) {
 		onMenu(4);
-		alert("YOU WIN!!! select START for next level");
-		level= level+1;
-		matrix = m[level];
-		renderTable();
-		renderObjects();
+		if (level+1<m.length) {
+			alert("YOU WIN!!! select START for next level");
+			level= level+1;
+			matrix = m[level];
+			renderTable();
+			renderObjects();
+		} else {
+		alert("You win! Game over.")
+		}
+		
 	}
 }
 
