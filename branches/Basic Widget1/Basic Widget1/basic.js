@@ -1,6 +1,5 @@
 /// <reference path="preview\vsdoc.js" />
 /// <reference path="jquery-1.4.1-vsdoc.js" />
-/// <reference path="jQueryRotate.js" />
 
 var sensor = null;
 var transactionIDAccelerometer = "";
@@ -10,8 +9,8 @@ var xAxisInit;
 var yAxisInit;
 var aprox;
 var step;
-var isActionX = 0; // 1 left, 2 right, 3 up, 4 down
-var isActionY = 0; // 1 left, 2 right, 3 up, 4 down
+var isActionX = 0; 
+var isActionY = 0; 
 var stopToAnimation = 1;
 var currX = 0;
 var currY = 0;
@@ -19,8 +18,7 @@ var aminationSpeed = 200;
 var level = 0;
 var matrix;
 
-var stepLog=[];//=[[0,0,0,0,false]];
-
+var stepLog=[];
 
 var m2 =[[4, 0, 4],
 		 [0, 1, 0],
@@ -29,15 +27,24 @@ var m2 =[[4, 0, 4],
 		 [.5, 0, 0],
 		 [0, 0, .5]];
 
-var m1 =[[1, 0, 4],
-		 [0, 3, .5]];
-var m=[m1,m2];
+var m1 =[[0, 0, 1],
+		 [.5, 3, 0]];
+		 
+var m3= [[4, 4, 4, 0, 0, .5],
+		 [0, 0, 0, 3, 0, 3.5],
+		 [0, 3, 3, 0, 3, .5],
+		 [4, 1, 4, 4, .5, .5]];
+
+var m=[m1,m2,m3];
 
 function initVars() {
 	xAxisInit = -100;
 	yAxisInit = -100;
-	aprox = 20;
+	aprox = 30;
 	step = 40;
+	isActionX = 0; 
+	isActionY = 0; 
+
 	matrix = m[level];
 }
 
@@ -63,38 +70,42 @@ function init() {
 
 function stepUp() {
 	currY--;
+	animationStart();
 	if (matrix[currY][currX] > 2) {
 		matrix[currY][currX] = matrix[currY][currX] - 3;
 		matrix[currY - 1][currX] = matrix[currY - 1][currX] + 3;
+		renderObjects();
 	}
-	animationStart();	
 }
 
 function stepDown() {
 	currY++;
+	animationStart();
 	if (matrix[currY][currX] > 2) {
 		matrix[currY][currX] = matrix[currY][currX] - 3;
 		matrix[currY + 1][currX] = matrix[currY + 1][currX] + 3;
+		renderObjects();
 	} 
-	animationStart();
 }
 
 function stepL() {
 	currX--;
+	animationStart();
 	if (matrix[currY][currX] > 2) {
 		matrix[currY][currX] = matrix[currY][currX] - 3;
 		matrix[currY][currX - 1] = matrix[currY][currX - 1] + 3;
+		renderObjects();
 	}
-	animationStart();
 }
 
 function stepR() {
 	currX++;
+	animationStart();
 	if (matrix[currY][currX] > 2) {
 		matrix[currY][currX] = matrix[currY][currX] - 3;
 		matrix[currY][currX + 1] = matrix[currY][currX + 1] + 3;
+		renderObjects();
 	} 
-	animationStart();
 }
 
 
@@ -107,11 +118,10 @@ function renderObjects() {
 				$("#mainDiv")
 				.append($('<div>').addClass("divMain")
 					.append($('<img>').attr({ src: "pack40.png" }))
-					.animate({ top: i * step, left: j * step }, 0, animationComplete));
+					.animate({ top: i * step, left: j * step +j+1}, 0, animationComplete));
 			}
 			else if (matrix[i][j] == 0.5)
 			{ win = false; }
-
 		}
 	}
 	if (win) {
@@ -119,11 +129,15 @@ function renderObjects() {
 		if (level+1<m.length) {
 			alert("YOU WIN!!! select START for next level");
 			level= level+1;
-			matrix = m[level];
+			//matrix = m[level];
+			initVars();
 			renderTable();
 			renderObjects();
+			xAxisInit=-100;
+			yAxisInit=-100;
+			
 		} else {
-		alert("You win! Game over.")
+			alert("You win! Game over.");
 		}
 		
 	}
@@ -140,8 +154,10 @@ function renderTable() {
 				stepLog = [];
 				stepLog[stepLog.length] = [i,j,false];
 				stopToAnimation = 0;
-				$("#cur").animate({ top: i * step+1, left: j * step+1 }, aminationSpeed, animationComplete);
-			} else if (matrix[i][j] == 0.5) {
+				$("#mainTable tr:last").append($('<td>').addClass("tdMain3"));
+			
+				$("#cur").animate({ top: i * step, left: j * step+1+j }, aminationSpeed, animationComplete);
+			} else if (matrix[i][j] == 0.5||matrix[i][j] == 3.5) {
 				$("#mainTable tr:last").append($('<td>').addClass("tdMain2"));
 			} else if (matrix[i][j] == 1) {
 				$("#mainTable tr:last").append($('<td>').addClass("tdMain3"));
@@ -185,9 +201,9 @@ function animationStart() {
 		} else {
 			stepLog[stepLog.length]=[currY,currX,false];
 		}
-		$("#cur").animate({ top: currY * step+1, left: currX * step+1 }, aminationSpeed, animationComplete);
+		$("#cur").animate({ top: currY * step+1, left: currX * step+1+currX }, aminationSpeed, animationComplete);
 	}
-	renderObjects();
+	//renderObjects();
 }
 
 function animationComplete() {
@@ -197,10 +213,13 @@ function animationComplete() {
 
 function initMenu() {
 	var optionsMenu = window.menu;
+	var m0 = new MenuItem("Undo", 3);
 	var m1 = new MenuItem("Stop", 4);
 	var m2 = new MenuItem("Start", 5);
+	m0.onSelect = onMenu;
 	m1.onSelect = onMenu;
 	m2.onSelect = onMenu;
+	optionsMenu.append(m0);
 	optionsMenu.append(m1);
 	optionsMenu.append(m2);
 }
@@ -210,6 +229,21 @@ function onMenu(id) {
 		startAccelerometerAxisSensorChannel();
 	} else if (id == 4) {
 		MystopChannel("AccelerometerAxis");
+	} else if (id==3&& stepLog.length>1){
+		
+		var x = stepLog[stepLog.length-2][1];
+		var y = stepLog[stepLog.length-2][0];	
+		
+		if (stepLog[stepLog.length-1][2]){
+			matrix[currY][currX] =matrix[currY][currX] +3;
+			matrix[2*currY-y][2*currX-x] =matrix[2*currY-y][2*currX-x] -3;
+			renderObjects();
+		}
+		stepLog.length=stepLog.length-1;
+		currY=y;
+		currX=x;
+		stopToAnimation=0;
+		$("#cur").animate({ top: currY * step, left: currX * step+1+currX }, aminationSpeed, animationComplete);
 	}
 };
 
