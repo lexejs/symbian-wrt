@@ -16,28 +16,36 @@ var stopToAnimation = 1;
 var currX = 0;
 var currY = 0;
 var aminationSpeed = 200;
+var level = 0;
+var matrix;
 
-var matrix =	 [[4, 0, 4],
-				 [0, 1, 0],
-				 [0, 4, 0],
-				 [3, 3, 0],
-				 [.5, 0, 0],
-				 [0, 0, 0.5]];
+var stepLog=[];//=[[0,0,0,0,false]];
+
+
+var m2 =[[4, 0, 4],
+		 [0, 1, 0],
+		 [0, 4, 0],
+		 [3, 3, 0],
+		 [.5, 0, 0],
+		 [0, 0, .5]];
+
+var m1 =[[1, 0, 4],
+		 [0, 3, .5]];
+var m=[m1,m2];
 
 function initVars() {
 	xAxisInit = -100;
 	yAxisInit = -100;
 	aprox = 20;
 	step = 40;
-	isActionX = 0;
-	isActionY = 0;
-	currX = 0;
-	currY = 0;
+	matrix = m[level];
 }
 
 function init() {
 	initVars();
+	renderTable();
 	initMenu();
+	
 	try {
 		initSensors();
 	}
@@ -48,50 +56,45 @@ function init() {
 	if (widget.isrotationsupported) {// change the screen orientation
 		widget.setDisplayPortrait();
 	}
-
-	renderTable();
+	
 	renderObjects();
 	startAccelerometerAxisSensorChannel();
 }
 
 function stepUp() {
 	currY--;
-	animationStart();
 	if (matrix[currY][currX] > 2) {
 		matrix[currY][currX] = matrix[currY][currX] - 3;
 		matrix[currY - 1][currX] = matrix[currY - 1][currX] + 3;
-		renderObjects();
 	}
+	animationStart();	
 }
 
 function stepDown() {
 	currY++;
-	animationStart();
 	if (matrix[currY][currX] > 2) {
 		matrix[currY][currX] = matrix[currY][currX] - 3;
 		matrix[currY + 1][currX] = matrix[currY + 1][currX] + 3;
-		renderObjects();
-	}
+	} 
+	animationStart();
 }
 
 function stepL() {
 	currX--;
-	animationStart();
 	if (matrix[currY][currX] > 2) {
 		matrix[currY][currX] = matrix[currY][currX] - 3;
 		matrix[currY][currX - 1] = matrix[currY][currX - 1] + 3;
-		renderObjects();
 	}
+	animationStart();
 }
 
 function stepR() {
 	currX++;
-	animationStart();
 	if (matrix[currY][currX] > 2) {
 		matrix[currY][currX] = matrix[currY][currX] - 3;
 		matrix[currY][currX + 1] = matrix[currY][currX + 1] + 3;
-		renderObjects();
-	}
+	} 
+	animationStart();
 }
 
 
@@ -113,7 +116,11 @@ function renderObjects() {
 	}
 	if (win) {
 		onMenu(4);
-		alert("YOU WIN!!!");
+		alert("YOU WIN!!! select START for next level");
+		level= level+1;
+		matrix = m[level];
+		renderTable();
+		renderObjects();
 	}
 }
 
@@ -125,8 +132,10 @@ function renderTable() {
 			if (matrix[i][j] == 1) {
 				currX = j;
 				currY = i;
+				stepLog = [];
+				stepLog[stepLog.length] = [i,j,false];
 				stopToAnimation = 0;
-				$("#cur").animate({ top: i * step, left: j * step }, aminationSpeed, animationComplete);
+				$("#cur").animate({ top: i * step+1, left: j * step+1 }, aminationSpeed, animationComplete);
 			} else if (matrix[i][j] == 0.5) {
 				$("#mainTable tr:last").append($('<td>').addClass("tdMain2"));
 			} else if (matrix[i][j] == 1) {
@@ -166,6 +175,11 @@ function canStepDown() {
 function animationStart() {
 	if (stopToAnimation == 1) {
 		stopToAnimation = 0;
+		if (matrix[currY][currX] > 2) {
+			stepLog[stepLog.length]=[currY,currX,true];
+		} else {
+			stepLog[stepLog.length]=[currY,currX,false];
+		}
 		$("#cur").animate({ top: currY * step+1, left: currX * step+1 }, aminationSpeed, animationComplete);
 	}
 	renderObjects();
