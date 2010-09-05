@@ -17,7 +17,9 @@ var currY = 0;
 var aminationSpeed = 200;
 var level = 0;
 var matrix;
-
+var itemFile1 = "gift.png";
+var itemFile2 = "giftg.png";
+var unitFile = "santa2.png"; 
 var stepLog=[];
 
 var m2 =[[4, 0, 4],
@@ -27,7 +29,7 @@ var m2 =[[4, 0, 4],
 		 [.5, 0, 0],
 		 [0, 0, .5]];
 
-var m1 =[[0, 0, 1],
+var m1 =[[0, 4, 1],
 		 [.5, 3, 0]];
 		 
 var m3= [[4, 4, 4, 0, 0, .5],
@@ -35,12 +37,13 @@ var m3= [[4, 4, 4, 0, 0, .5],
 		 [0, 3, 3, 0, 3, .5],
 		 [4, 1, 4, 4, .5, .5]];
 
-var m=[m1,m2,m3];
+//var m4 = [[
+var m=[m1,m3];
 
 function initVars() {
 	xAxisInit = -100;
 	yAxisInit = -100;
-	aprox = 30;
+	aprox = 20;
 	step = 40;
 	isActionX = 0; 
 	isActionY = 0; 
@@ -51,6 +54,16 @@ function initVars() {
 function init() {
 	initVars();
 	renderTable();
+	$("#mainDiv").append($('<div>').addClass("divMain")
+					.append($('<img>').attr({ src: itemFile1,style:"height:" + step+"px"  }))
+					.animate({ top: 0, left: 1}, 0, animationComplete));
+	$("#mainDiv").append($('<div>').addClass("divMain")
+					.append($('<img>').attr({ src: itemFile2 ,style:"height:" + step+"px"}))
+					.animate({ top: step, left: 1}, 0, animationComplete));
+			
+	$("#cur").append($('<img>')
+	.attr({ src: unitFile ,style:"height:" + step+"px"}));
+			
 	initMenu();
 	
 	try {
@@ -114,10 +127,16 @@ function renderObjects() {
 	var win = true;
 	for (var i = 0; i < matrix.length; i++) {
 		for (var j = 0; j < matrix[0].length; j++) {
-			if (matrix[i][j] == 3 || matrix[i][j] == 3.5) {
+			if (matrix[i][j] == 3 ) {
 				$("#mainDiv")
 				.append($('<div>').addClass("divMain")
-					.append($('<img>').attr({ src: "pack40.png" }))
+					.append($('<img>').attr({ src: itemFile1,style:"height:" + step+"px" }))
+					.animate({ top: i * step, left: j * step +j+1}, 0, animationComplete));
+			}
+			else if (matrix[i][j] == 3.5){
+				$("#mainDiv")
+				.append($('<div>').addClass("divMain")
+					.append($('<img>').attr({ src: itemFile2,style:"height:" + step+"px" }))
 					.animate({ top: i * step, left: j * step +j+1}, 0, animationComplete));
 			}
 			else if (matrix[i][j] == 0.5)
@@ -125,18 +144,14 @@ function renderObjects() {
 		}
 	}
 	if (win) {
-		onMenu(4);
 		if (level+1<m.length) {
-			alert("YOU WIN!!! select START for next level");
+			alert("YOU WIN!!! next level");
 			level= level+1;
-			//matrix = m[level];
 			initVars();
 			renderTable();
 			renderObjects();
-			xAxisInit=-100;
-			yAxisInit=-100;
-			
 		} else {
+			onMenu(4);
 			alert("You win! Game over.");
 		}
 		
@@ -220,8 +235,8 @@ function initMenu() {
 	m1.onSelect = onMenu;
 	m2.onSelect = onMenu;
 	optionsMenu.append(m0);
-	optionsMenu.append(m1);
 	optionsMenu.append(m2);
+	optionsMenu.append(m1);
 }
 
 function onMenu(id) {
