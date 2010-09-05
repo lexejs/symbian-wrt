@@ -33,18 +33,20 @@
 	padding: 0 0 0 0;
 	width: 39px;
 	border-width: thin;
-	border-color: Red;
+	border-color: Gray;
 	border-style: inset;
 }
 
 .tdMain2
 {
 	background-color: Blue;
+	
+	margin: 10 10 10 10;
 }
 
 .tdMain3
 {
-	background-color: Red;
+	background-color: Yellow;
 }
 
 .tdMain4
