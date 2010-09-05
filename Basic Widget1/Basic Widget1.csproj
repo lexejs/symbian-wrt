@@ -1,11 +1,12 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{80DC22A1-A219-4FDC-A498-A745CCDCDA16}</ProjectGuid>
-    <ProjectTypeGuids>{C5296E6E-C1E7-4006-A605-C677B30FADE7};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectTypeGuids>{C5296E6E-C1E7-4006-A605-C677B30FADE7};{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <RootNamespace>Basic_Widget1</RootNamespace>
     <AssemblyName>Basic Widget1</AssemblyName>
@@ -33,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <AvailableItemName Include="IncludeInWgz">
-      <Visible>false</Visible>
+      <Visible>False</Visible>
     </AvailableItemName>
   </ItemGroup>
   <ItemGroup>
@@ -417,10 +418,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
-  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
   <Target Name="PackageWidget">
     <MakeDir Directories="$(OutputPath)$(TargetName)" />
-    <Copy SourceFiles="@(IncludeInWgz->'%(FullPath)')" DestinationFiles="@(IncludeInWgz->'$(OutputPath)$(TargetName)\%(Identity)')">
+    <Copy SourceFiles="@(IncludeInWgz-&gt;'%(FullPath)')" DestinationFiles="@(IncludeInWgz-&gt;'$(OutputPath)$(TargetName)\%(Identity)')">
       <Output TaskParameter="CopiedFiles" ItemName="WgzFileItems" />
     </Copy>
     <Zip Files="@(WgzFileItems)" WorkingDirectory="$(OutputPath)" ZipFileName="$(ProjectDir)$(TargetName).wgz" />
@@ -444,5 +444,15 @@
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
+    <MonoDevelop>
+      <Properties VerifyCodeBehindFields="true" VerifyCodeBehindEvents="true">
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="true" />
+      </Properties>
+    </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Content Include="gift.png" />
+    <Content Include="giftg.png" />
+    <Content Include="santa2.png" />
+  </ItemGroup>
 </Project>
