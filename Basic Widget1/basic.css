@@ -6,6 +6,8 @@
 {
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
+	height:577px;
+	width:360px;
 }
 .tableMain
 {
@@ -24,33 +26,28 @@
 {
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
-	height: 40px;
+	/*height: 40px;*/
 }
 
 .tdMain, .tdMain2, .tdMain3, .tdMain4
 {
+	border: thin outset #999999;
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
 	width: 39px;
-	border-width: thin;
-	border-color: Gray;
-	border-style: inset;
 }
 
-.tdMain2
+/* target */
+.tdMain2 
 {
-	background-color: Blue;
-	
-	margin: 10 10 10 10;
+	border-style: ridge;
+	background-color: #74FCAD;
 }
 
-.tdMain3
-{
-	background-color: Yellow;
-}
-
+/* wall */
 .tdMain4
 {
-	background-color: Gray;
+	border-style: inset;
+	background-color: #A37676;
 }
 
