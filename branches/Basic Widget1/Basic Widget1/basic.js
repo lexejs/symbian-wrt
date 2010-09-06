@@ -57,17 +57,25 @@ function initVars() {
 
 }
 
-function moveObject(event) {
-	//if (!event) event = window.event;
-	$("#message").append("<br/> event " + event + " " + window.pageXOffset + ';' + window.pageYOffset);
-}
- 
-function init() {
 
-	//adding the event listerner for Mozilla
-	//if (window.addEventListener) document.addEventListener('DOMMouseScroll', moveObject, false);
-	//for IE/OPERA etc
-	document.onscroll = moveObject;
+function ondown() {
+	var xPos = event.screenX;
+    var yPos = event.screenY;
+    message("onmousedown " + xPos + " Y "+ yPos);
+}
+
+function message(str){
+	$("#message").append("<br/>"+ str);
+}
+
+ 
+function onmove(e) {
+ message( "x: " + e.pageX + " y: " + e.pageY);
+}
+
+function init() {
+	window.onmousemove = onmove;
+	window.onmousedown = ondown;
 
 	initVars();
 	renderTable();
